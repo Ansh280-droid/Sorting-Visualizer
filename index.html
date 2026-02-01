@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorting Visualizer</title>
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<!-- ===== HELP MODAL ===== -->
+<div id="helpModal" class="helpModal">
+  <div class="helpContent">
+    <div class="helpHeader">
+      <h2>📘 Sorting Visualizer Help</h2>
+      <button id="closeHelp" class="closeHelpBtn">✖</button>
+    </div>
+
+    <div class="helpBody">
+      <div class="helpSection">
+        <h3>🎯 Objectives</h3>
+        <ul>
+          <li>Understand how sorting algorithms work step-by-step.</li>
+          <li>Visualize comparisons and swaps using bars animation.</li>
+          <li>Learn time complexity (Best / Average / Worst case).</li>
+          <li>Improve logic building & problem-solving skills.</li>
+        </ul>
+      </div>
+
+      <div class="helpSection">
+        <h3>✅ Advantages</h3>
+        <ul>
+          <li>Easy to learn sorting algorithms visually.</li>
+          <li>Interactive UI (speed + size control).</li>
+          <li>Helps in interview preparation.</li>
+          <li>Better understanding than reading only theory.</li>
+        </ul>
+      </div>
+
+      <div class="helpSection">
+        <h3>⚠ Disadvantages</h3>
+        <ul>
+          <li>Large array sizes may slow down animations.</li>
+          <li>Some algorithms (like Bubble Sort) are inefficient for big data.</li>
+          <li>Visualization does not show internal recursion clearly for all algorithms.</li>
+          <li>Not a replacement for real-world optimized sorting libraries.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<body>
+
+  <!-- ======= Preloader / Loading Screen ======= -->
+  <div id="preloader">
+    <div class="loaderBox">
+      
+      <div class="loaderRing"><!-- Logo -->
+<img src="sorting-process.png" alt="Sorting Visualizer Logo" class="loaderLogo" />
+</div>
+
+      <h2 class="loaderTitle">
+        Sorting Visualizer <span class="loaderIcon">↻</span>
+      </h2>
+
+      <p class="loaderText">Visualizing sorting magic... ❤️</p>
+
+
+
+      <div class="progressBar">
+        <div class="progressFill" id="progressFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background -->
+  <div class="tech-bg"></div>
+
+  <!-- Navbar -->
+  <header>
+    <div class="navbar">
+      <div class="navLeft">
+        <h1 class="logoTitle">
+          Sorting Visualizer <span class="sortIcon">↻</span>
+        </h1>
+        <p class="navSubtitle">Visualize • Learn • Master Sorting</p>
+      </div>
+      <nav class="navRight">
+        <ul>
+          <li class="navItem">
+            <label for="sorting">Algorithm</label>
+            <select id="sorting" class="navSelect">
+              <option value="bubble">Bubble Sort</option>
+              <option value="selection">Selection Sort</option>
+              <option value="insertion">Insertion Sort</option>
+              <option value="merge">Merge Sort</option>
+              <option value="quick">Quick Sort</option>
+              <option value="heap">Heap Sort</option>
+            </select>
+          </li>
+
+          <li class="navItem">
+            <button id="stopSort" class="navBtn dangerBtn">🛑 Stop</button>
+          </li>
+
+          <li class="navItem">
+            <button id="randomize" class="navBtn secondaryBtn">🎲 Randomize</button>
+          </li>
+
+          <li class="navItem">
+            <button id="startSort" class="navBtn primaryBtn">⚡ Start</button>
+          </li>
+          <li class="navItem">
+  <button id="helpBtn" class="navBtn helpBtn">☰</button>
+
+</li>
+
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <p class="typingText">
+      <span id="statusDot" class="dot"></span>
+      <span id="statusText"></span>
+    </p>
+
+    <div class="visualWrapper">
+      <!-- LEFT SIDE -->
+      <div class="barsSection">
+        <div id="barsContainer">
+          <div id="arrayCountBadge" class="arrayCountBadge"></div>
+        </div>
+
+        <!-- Algo Definition Box -->
+        <div id="algoDefinitionBox" class="algoDefinitionBox">
+          <h3 id="algoDefTitle">Bubble Sort</h3>
+          <p id="algoDefText">
+            Bubble Sort repeatedly compares adjacent elements and swaps them if
+            they are in the wrong order until the array is sorted.
+          </p>
+        </div>
+      </div>
+      
+
+      <!-- RIGHT SIDE -->
+      <div class="infoPanel">
+        <div class="infoHeader">
+          <h2>Algorithm Info</h2>
+          <span class="infoTag">LIVE</span>
+        </div>
+
+        <div class="selectedAlgoCard">
+          <div class="algoLeft">
+            <p class="smallLabel">Selected Algorithm</p>
+            <h3 id="algoName" class="algoNameText">Bubble Sort</h3>
+          </div>
+          <div class="algoRight">
+            <span class="algoBadge" id="algoBadge">O(n²)</span>
+          </div>
+        </div>
+
+        <div class="complexityGrid">
+          <div class="complexityCard best">
+            <p class="complexityTitle">Best Case</p>
+            <h3 id="bestTC">O(n)</h3>
+            <p class="complexityHint">Already nearly sorted</p>
+          </div>
+
+          <div class="complexityCard avg">
+            <p class="complexityTitle">Average Case</p>
+            <h3 id="avgTC">O(n²)</h3>
+            <p class="complexityHint">Typical random input</p>
+          </div>
+
+          <div class="complexityCard worst">
+            <p class="complexityTitle">Worst Case</p>
+            <h3 id="worstTC">O(n²)</h3>
+            <p class="complexityHint">Reverse / max swaps</p>
+          </div>
+
+          <div class="complexityCard space">
+            <p class="complexityTitle">Space</p>
+            <h3 id="spaceTC">O(1)</h3>
+            <p class="complexityHint">Extra memory usage</p>
+          </div>
+        </div>
+
+        <div class="sliderSection">
+          <div class="sliderBox">
+            <div class="sliderTop">
+              <label>Array Size</label>
+              <span class="sliderValue"><span id="sizeValue">20</span></span>
+            </div>
+            <input type="range" id="sizeSlider" min="10" max="100" step="10" value="20" />
+            <p class="sliderHint">More size = more bars & slower sort</p>
+          </div>
+
+          <div class="sliderBox">
+            <div class="sliderTop">
+              <label>Speed</label>
+              <span class="sliderValue"><span id="speedValue">300</span>ms</span>
+            </div>
+            <input type="range" id="speedSlider" min="50" max="1000" step="50" value="300" />
+            <p class="sliderHint">Lower ms = faster animation</p>
+          </div>
+        </div>
+
+        <button id="generateBtn" class="generateBtn">⚡ Generate Array</button>
+      </div>
+    </div>
+<!-- ======= Practice Problems Section ======= -->
+<section class="practiceSection">
+  <div class="practiceHeader">
+    <h2>🧠 Practice Sorting Problems</h2>
+    <p>Boost your sorting skills by solving real interview-style questions.</p>
+  </div>
+
+  <div class="practiceGrid">
+
+    <!-- LeetCode -->
+    <div class="practiceCard">
+      <h3>LeetCode</h3>
+      <ul>
+        <li><a href="https://leetcode.com/problems/sort-colors/" target="_blank">Sort Colors</a></li>
+        <li><a href="https://leetcode.com/problems/merge-intervals/" target="_blank">Merge Intervals</a></li>
+        <li><a href="https://leetcode.com/problems/top-k-frequent-elements/" target="_blank">Top K Frequent Elements</a></li>
+        <li><a href="https://leetcode.com/problems/kth-largest-element-in-an-array/" target="_blank">Kth Largest Element</a></li>
+      </ul>
+    </div>
+
+    <!-- GeeksforGeeks -->
+    <div class="practiceCard">
+      <h3>GeeksforGeeks</h3>
+      <ul>
+        <li><a href="https://www.geeksforgeeks.org/sorting-algorithms/" target="_blank">Sorting Algorithms (Theory)</a></li>
+        <li><a href="https://www.geeksforgeeks.org/problems/count-the-triplets4615/1" target="_blank">Count the Triplets</a></li>
+        <li><a href="https://www.geeksforgeeks.org/problems/kth-smallest-element5635/1" target="_blank">Kth Smallest Element</a></li>
+        <li><a href="https://www.geeksforgeeks.org/problems/minimum-swaps/1" target="_blank">Minimum Swaps</a></li>
+      </ul>
+    </div>
+
+    <!-- HackerRank -->
+    <div class="practiceCard">
+      <h3>HackerRank</h3>
+      <ul>
+        <li><a href="https://www.hackerrank.com/challenges/ctci-bubble-sort/problem" target="_blank">Bubble Sort (Counting Swaps)</a></li>
+        <li><a href="https://www.hackerrank.com/challenges/mark-and-toys/problem" target="_blank">Mark and Toys</a></li>
+        <li><a href="https://www.hackerrank.com/challenges/fraudulent-activity-notifications/problem" target="_blank">Fraudulent Activity Notifications</a></li>
+      </ul>
+    </div>
+
+    <!-- CodeChef -->
+    <div class="practiceCard">
+      <h3>CodeChef</h3>
+      <ul>
+        <li><a href="https://www.codechef.com/problems/TSORT" target="_blank">Turbo Sort</a></li>
+        <li><a href="https://www.codechef.com/problems/CSUM" target="_blank">COPS (Sorting + Search)</a></li>
+        <li><a href="https://www.codechef.com/problems/SRTARR" target="_blank">Sort the Array</a></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+  </main>
+<footer class="neoFooter">
+  <div class="neoFooterInner">
+
+    <!-- Owner Credit -->
+    <div class="footerCredit">
+      <h3 class="footerLogo">Sorting Visualizer</h3>
+      <p class="footerTagline">
+        Built with <span class="footerHeart">❤️</span> by
+        <a href="#" target="_blank" class="footerOwner">Ansh Yadav</a>
+      </p>
+    </div>
+
+    <!-- Links -->
+    <div class="footerSocial">
+     <p class="footerTitle"></p>
+
+      <div class="footerBtns">
+        <a href="https://github.com/Ansh280-droid" target="_blank" class="footerBtn githubBtn" aria-label="GitHub">
+  <!-- GitHub official logo SVG -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 8px;">
+    <path d="M12 0.297C5.37 0.297 0 5.667 0 12.297c0 5.292 3.438 9.787 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.082-.73.082-.73 1.205.084 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.997.108-.775.42-1.305.763-1.605-2.665-.304-5.466-1.335-5.466-5.93 0-1.31.467-2.38 1.235-3.22-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.48 11.48 0 013.003-.403c1.02.005 2.045.137 3.003.403 2.29-1.552 3.296-1.23 3.296-1.23.655 1.653.243 2.873.12 3.176.77.84 1.233 1.91 1.233 3.22 0 4.61-2.807 5.624-5.48 5.922.43.372.823 1.102.823 2.222 0 1.606-.015 2.9-.015 3.293 0 .322.216.694.825.576C20.565 22.08 24 17.58 24 12.297 24 5.667 18.627.297 12 .297z"/>
+  </svg>
+  GitHub
+</a>
+
+        <a href="https://www.linkedin.com/in/ansh-yadav-515a86324/" target="_blank" class="footerBtn linkedinBtn" aria-label="LinkedIn">
+  <!-- LinkedIn official logo SVG -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 34 34" fill="none" style="vertical-align: middle; margin-right: 8px;">
+    <rect width="34" height="34" rx="4" fill="#0077B5"/>
+    <path fill="white" d="M10.987 13.5H7.353v13h3.634v-13zM9.17 11.51a2.105 2.105 0 110-4.21 2.105 2.105 0 010 4.21zM26.632 19.222c0-3.324-1.783-4.875-4.161-4.875-1.91 0-2.75 1.052-3.223 1.793v-1.537H15.6c.05 1.005 0 13 0 13h3.634v-7.27c0-.39.028-.78.143-1.06.312-.78 1.02-1.59 2.21-1.59 1.56 0 2.187 1.2 2.187 2.955v6.966h3.634v-7.877z"/>
+  </svg>
+  LinkedIn
+</a>
+
+      </div>
+    </div>
+
+  </div>
+
+  <p class="footerBottomLine">
+    © <span id="footerYear"></span> Sorting Visualizer • All Rights Reserved
+  </p>
+</footer>
+
+  <!-- Audio -->
+  <audio id="sortSong" src="game-gaming-video-game-music-471936 (1).mp3" loop></audio>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
